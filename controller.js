@@ -7,13 +7,13 @@ if(!name){
 }
 
 db.query(
-    'INSERT INTO names (name) VALUES (?)',
-    [name],
+    'INSERT INTO names (name,status) VALUES (?,?)',
+    [name,"pending"],
     (err)=>{
         if(err){
             return resp.status(400).json({success:false,message:"db error"})
         }
-        return resp.status(200).json({success:true,message:"done"})
+        return resp.status(200).json({success:true,message:"done",status:"pending........"})
     }
 )
 
