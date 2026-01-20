@@ -22,6 +22,53 @@ db.query(
 }
 
 
+export const getreq=(req,resp)=>{
+    db.query(
+        'SELECT * FROM names',
+        (err,res)=>{
+            if(err){
+                return resp.status(400).json({success:false,message:"db error for req"})
+            }
+            if(res.length === 0){
+                return resp.status(400).json({success:false,message:"no request"})
+            }
+            const data=res;
+            return resp.status(200).json({success:true,message:"success",data:data})
+        }
+    )
+}
+
+
+export const accept=(req,resp)=>{
+    const{email}=req.body;
+    console.log(email)
+    db.query(
+        'UPDATE names SET status="Accepted" WHERE name=?',
+        [email],
+        (err)=>{
+            if(err){
+                return resp.status(400).json({success:false,message:"db error"})
+            }
+            return resp.status(200).json({success:true,message:"success"})
+        }
+    )
+}
+
+
+
+export const reject=(req,resp)=>{
+    const{email}=req.body;
+    db.query(
+        'UPDATE names SET status="Rejected" WHERE name=?',
+        [email],
+        (err)=>{
+            if(err){
+                return resp.status(400).json({success:false,message:"db error"})
+            }
+            return resp.status(200).json({success:true,message:"success"})
+        }
+    )
+}
 
 
 
