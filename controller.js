@@ -24,7 +24,7 @@ db.query(
 
 export const getreq=(req,resp)=>{
     db.query(
-        'SELECT * FROM names',
+        'SELECT name,status FROM names WHERE status = "pending"',
         (err,res)=>{
             if(err){
                 return resp.status(400).json({success:false,message:"db error for req"})
